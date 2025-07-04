@@ -40,7 +40,7 @@ export default function MonthSelector({ userId, onSelectMonth }) {
           key={`${year}-${month}`}
           value={`${year}-${String(month).padStart(2, "0")}`}
         >
-          {new Date(year, month - 1).toLocaleString("default", {
+          {new Date(year, month - 1).toLocaleString("en-US", {
             month: "long",
             year: "numeric",
           })}

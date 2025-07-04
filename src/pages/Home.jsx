@@ -1,10 +1,17 @@
 "use client";
-
+import { motion } from "framer-motion";
 import Link from "next/link";
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col items-center justify-center text-gray-800 px-4">
+    <motion.div
+      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -10, scale: 0.95 }}
+      transition={{ duration: 0.2 }}
+      layout
+      className="flex flex-col items-center justify-center text-gray-800 px-4"
+    >
       <div className="max-w-3xl mx-auto text-center bg-white p-8 rounded-lg shadow-lg">
         <h1 className="md:text-5xl text-2xl font-extrabold leading-tight">
           Welcome to TCP App
@@ -22,6 +29,6 @@ export default function HomePage() {
           </Link>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

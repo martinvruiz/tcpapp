@@ -22,7 +22,7 @@ export default function TimeTracker({
         onChange={onChangeTitle}
         placeholder="Title (max 10 caract.)"
         maxLength={10}
-        className="border border-gray-300 rounded-lg my-2 px-4 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 min-w-3xs"
+        className="border border-gray-300 rounded-lg my-2 px-4 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-sky-900 min-w-3xs"
       />
 
       <div className="mb-6">
@@ -35,7 +35,7 @@ export default function TimeTracker({
               value={entryDate}
               onChange={onChangeEntryDate}
               max={exitDate}
-              className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 border rounded focus:ring-2 focus:ring-sky-900"
             />
           </div>
           <div>
@@ -44,7 +44,7 @@ export default function TimeTracker({
               type="time"
               value={entryTime}
               onChange={onChangeEntryTime}
-              className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 border rounded focus:ring-2 focus:ring-sky-900"
             />
           </div>
         </div>
@@ -60,7 +60,7 @@ export default function TimeTracker({
               value={exitDate}
               onChange={onChangeExitDate}
               min={entryDate}
-              className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 border rounded focus:ring-2 focus:ring-sky-900"
             />
           </div>
           <div>
@@ -69,7 +69,7 @@ export default function TimeTracker({
               type="time"
               value={exitTime}
               onChange={onChangeExitTime}
-              className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 border rounded focus:ring-2 focus:ring-sky-900"
             />
           </div>
         </div>

@@ -1,4 +1,5 @@
 "use client";
+import { motion } from "framer-motion";
 import TimeTracker from "@/components/TimeTracker";
 import { useWorkHours } from "@/hooks/useWorkHours";
 import { useStore } from "@/store/useStore";
@@ -25,23 +26,45 @@ export default function page() {
   const user = useStore((state) => state.profile);
 
   const calculateDuration = async () => {
+    if (!user) {
+      alert("You must be logged in to register your work hours.");
+      return;
+    }
+
+    if (!entryDate || !entryTime || !exitDate || !exitTime) {
+      alert("Please complete all fields before saving.");
+      return;
+    }
+
     const start = new Date(`${entryDate}T${entryTime}`);
     const end = new Date(`${exitDate}T${exitTime}`);
-    if (!user) {
-      alert("You must log in to use the app");
+
+    if (isNaN(start) || isNaN(end)) {
+      alert("Invalid date or time format.");
+      return;
+    }
+
+    if (start.getTime() === end.getTime()) {
+      alert("Entry and exit times cannot be the same.");
       return;
     }
 
     if (end <= start) {
-      setDuration("Exit must be after Entry");
+      setDuration("Exit must be after entry.");
       return;
     }
-
     const diff = end - start;
     const totalHours = diff / (1000 * 60 * 60);
     const totalMinutes = Math.round(diff / (1000 * 60));
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
+
+    if (totalHours > 16) {
+      const confirm = window.confirm(
+        "Are you sure you worked more than 16 hours?"
+      );
+      if (!confirm) return;
+    }
 
     setDuration(`${hours}h ${minutes}m`);
 
@@ -55,12 +78,18 @@ export default function page() {
 
     if (result) {
       addHour(result[0]);
-      await fetchTotalTime(user.id);
     }
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md text-black md:min-w-3xl min-w-xs my-4 ">
+    <motion.div
+      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -10, scale: 0.95 }}
+      transition={{ duration: 0.2 }}
+      layout
+      className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md text-black md:min-w-3xl min-w-xs my-4 "
+    >
       <TimeTracker
         entryDate={entryDate}
         entryTime={entryTime}
@@ -75,7 +104,7 @@ export default function page() {
       />
       <div className="p-4 bg-gray-50 rounded-lg flex flex-col items-center gap-2">
         <button
-          className="bg-blue-900 p-3 rounded-md text-white"
+          className="bg-sky-900 hover:bg-sky-600 p-3 rounded-md text-white"
           onClick={() => calculateDuration()}
         >
           Log time
@@ -87,6 +116,6 @@ export default function page() {
           <p className="text-red-500 text-sm text-center mt-1">{duration}</p>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }
