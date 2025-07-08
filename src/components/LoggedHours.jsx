@@ -27,15 +27,15 @@ export default function LoggedHours({ loggedTime, onView }) {
             className="bg-white border border-gray-200 hover:shadow-md transition-all duration-300 rounded-lg p-4 flex flex-row items-center justify-center md:justify-between text-center gap-2 w-full text-sm sm:text-base min-w-xs sm:min-w-lg"
           >
             <h4 className="font-semibold text-gray-800 w-2/5 md:text-start">
-              {time.notes || "No notes"}
+              {time.notes || "N/A"}
             </h4>
 
             <div className="flex gap-3 w-4/5 justify-end">
-              <span className="px-4 py-1 rounded-lg text-xs font-medium bg-indigo-100 text-indigo-600">
+              <span className="px-4 py-1 rounded-lg text-xs font-medium bg-sky-100 text-sky-600">
                 Hour: {pad(hours)}
               </span>
 
-              <span className="px-4 py-1 rounded-lg text-xs font-medium bg-indigo-100 text-indigo-600">
+              <span className="px-4 py-1 rounded-lg text-xs font-medium bg-sky-100 text-sky-600">
                 Min: {pad(minutes)}
               </span>
             </div>

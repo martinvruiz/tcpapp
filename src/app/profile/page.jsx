@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import Login from "@/components/Login";
-import UserProfile from "@/components/userProfle";
+import UserProfile from "@/components/UserProfile";
 import { useStore } from "@/store/useStore";
 
 export default function page() {

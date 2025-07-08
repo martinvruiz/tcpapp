@@ -8,6 +8,8 @@ import ViewHour from "@/components/ViewHour";
 import { useWorkHours } from "@/hooks/useWorkHours";
 import { useStore } from "@/store/useStore";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { confirmToast } from "@/utils/toastUtils";
 
 const monthNames = [
   "January",
@@ -59,13 +61,20 @@ export default function page() {
     await fetchTotalTime(profile.id, year, month);
   };
 
-  const handleDeleteEntry = async (id) => {
-    await deleteWorkHour(id);
-    deleteHour(id);
+  const handleDelete = (entry) => {
+    confirmToast({
+      message: `Delete this item: ${entry.notes}`,
+      onConfirm: () => handleDeleteEntry(entry),
+    });
+  };
+
+  const handleDeleteEntry = async (entry) => {
+    await deleteWorkHour(entry.id);
+    deleteHour(entry.id);
 
     await fetchTotalTime(profile.id, selectedYear, selectedMonth);
 
-    setFilteredHours((prev) => prev.filter((hour) => hour.id !== id));
+    setFilteredHours((prev) => prev.filter((hour) => hour.id !== entry.id));
 
     setModalOpen(false);
   };
@@ -126,7 +135,7 @@ export default function page() {
         <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
           <ViewHour
             hour={selectedHour}
-            handleDeleteEntry={() => handleDeleteEntry(selectedHour.id)}
+            handleDeleteEntry={() => handleDelete(selectedHour)}
           />
         </Modal>
       </div>

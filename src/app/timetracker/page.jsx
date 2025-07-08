@@ -4,6 +4,7 @@ import TimeTracker from "@/components/TimeTracker";
 import { useWorkHours } from "@/hooks/useWorkHours";
 import { useStore } from "@/store/useStore";
 import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 export default function page() {
   const { saveWorkHours, fetchTotalTime } = useWorkHours();
@@ -27,12 +28,12 @@ export default function page() {
 
   const calculateDuration = async () => {
     if (!user) {
-      alert("You must be logged in to register your work hours.");
+      toast.warn("You must be logged in to register your work hours.");
       return;
     }
 
     if (!entryDate || !entryTime || !exitDate || !exitTime) {
-      alert("Please complete all fields before saving.");
+      toast.warn("Please complete all fields before saving.");
       return;
     }
 
@@ -40,17 +41,17 @@ export default function page() {
     const end = new Date(`${exitDate}T${exitTime}`);
 
     if (isNaN(start) || isNaN(end)) {
-      alert("Invalid date or time format.");
+      toast.warn("Invalid date or time format.");
       return;
     }
 
     if (start.getTime() === end.getTime()) {
-      alert("Entry and exit times cannot be the same.");
+      toast.warn("Entry and exit times cannot be the same.");
       return;
     }
 
     if (end <= start) {
-      setDuration("Exit must be after entry.");
+      toast.warn("Exit must be after entry.");
       return;
     }
     const diff = end - start;
@@ -79,6 +80,8 @@ export default function page() {
     if (result) {
       addHour(result[0]);
     }
+
+    toast.success("Saved");
   };
 
   return (
@@ -104,10 +107,10 @@ export default function page() {
       />
       <div className="p-4 bg-gray-50 rounded-lg flex flex-col items-center gap-2">
         <button
-          className="bg-sky-900 hover:bg-sky-600 p-3 rounded-md text-white"
+          className="bg-sky-900 hover:bg-sky-600 p-3 px-8 rounded-md text-white"
           onClick={() => calculateDuration()}
         >
-          Log time
+          Save time
         </button>
         <p className="font-medium text-center">
           Total time logged: <span className="text-blue-600">{duration}</span>
