@@ -16,12 +16,12 @@ export default function Login() {
     if (!email || !password) {
       alert("email or password missing");
     }
-    const { user, error } = await logIn(email, password);
+    const { data, error } = await logIn(email, password);
     if (error) {
       alert(error);
       return;
     }
-    const hours = await fetchWorkHours(user.id);
+    const hours = await fetchWorkHours(data.user.id);
     setLoggedHours(hours);
   };
   return (

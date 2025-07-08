@@ -42,18 +42,18 @@ export function useAuth() {
   const logIn = async (email, password) => {
     setLoading(true);
     setError(null);
-    const { error, data: user } = await supabase.auth.signInWithPassword({
+    const { error, data } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
     if (error) {
       setError(error.message);
     } else {
-      setProfile(user);
-      fetchWorkHours(user.id);
+      setProfile(data.user);
+      await fetchWorkHours(data.user.id);
     }
     return {
-      user,
+      data,
       error: error?.message ?? null,
     };
   };
@@ -61,7 +61,6 @@ export function useAuth() {
   const logOut = async () => {
     await supabase.auth.signOut();
     setProfile(null);
-    router.push("/");
   };
 
   const initializeProfile = async () => {

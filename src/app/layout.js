@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Initialize from "@/components/Initialize";
@@ -13,6 +13,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  variable: "--font-inter",
+});
+
 export const metadata = {
   title: "TCP App",
   description: "Log your hours",
@@ -21,9 +27,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${inter.className} antialiased`}>
         <div className="flex md:flex-row flex-col">
           <Initialize />
           <Navbar>{children}</Navbar>

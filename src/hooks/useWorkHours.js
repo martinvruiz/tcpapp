@@ -100,12 +100,25 @@ export function useWorkHours() {
 
     return data;
   };
+
+  const deleteWorkHour = async (id) => {
+    const { error, data } = await supabase
+      .from("loggedHours")
+      .delete()
+      .eq("id", id);
+    if (error) {
+      console.error("error deleting entry", error);
+      return;
+    }
+    return data;
+  };
   return {
     saveWorkHours,
     fetchWorkHours,
     fetchTotalTime,
     fetchAvailableMonths,
     fetchWorkHoursByMonth,
+    deleteWorkHour,
     loading,
     error,
   };

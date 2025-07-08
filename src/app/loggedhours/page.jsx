@@ -9,30 +9,35 @@ import { useWorkHours } from "@/hooks/useWorkHours";
 import { useStore } from "@/store/useStore";
 import React, { useEffect, useState } from "react";
 
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 export default function page() {
   const loggedHours = useStore((state) => state.loggedHours);
   const totalHours = useStore((state) => state.totalHours);
+  const deleteHour = useStore((state) => state.deleteHour);
   const profile = useStore((state) => state.profile);
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
 
   const [filteredHours, setFilteredHours] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedHour, setSelectedHour] = useState(null);
   const [month, setMonth] = useState("");
-  const { fetchWorkHoursByMonth, fetchTotalTime } = useWorkHours();
+  const [selectedYear, setSelectedYear] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState(null);
+  const { fetchWorkHoursByMonth, fetchTotalTime, deleteWorkHour } =
+    useWorkHours();
 
   const handleMonthSelect = async (year, month) => {
     if (!profile) return;
@@ -41,6 +46,10 @@ export default function page() {
       setFilteredHours(loggedHours);
       return;
     }
+
+    setSelectedMonth(month);
+    setSelectedYear(year);
+
     const data = await fetchWorkHoursByMonth(profile.id, year, month);
     setFilteredHours(data);
 
@@ -50,10 +59,22 @@ export default function page() {
     await fetchTotalTime(profile.id, year, month);
   };
 
+  const handleDeleteEntry = async (id) => {
+    await deleteWorkHour(id);
+    deleteHour(id);
+
+    await fetchTotalTime(profile.id, selectedYear, selectedMonth);
+
+    setFilteredHours((prev) => prev.filter((hour) => hour.id !== id));
+
+    setModalOpen(false);
+  };
+
   useEffect(() => {
-    console.log("loggedHours:", loggedHours);
-    console.log("filteredHours:", filteredHours);
-  }, [loggedHours, filteredHours]);
+    if (!month) {
+      setFilteredHours(loggedHours);
+    }
+  }, [loggedHours, month]);
 
   return (
     <motion.div
@@ -61,9 +82,9 @@ export default function page() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
       layout
-      className="max-w-md mx-auto p-6 my-6 md:mt-0 bg-white rounded-lg shadow-md text-black md:min-w-4xl sm:min-w-xl"
+      className="max-w-md min-h-[60dvh] mx-auto p-6 my-6 bg-white rounded-lg shadow-md text-black md:min-w-4xl sm:min-w-xl"
     >
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center justify-center">
         <h2 className="text-xl md:text-3xl font-bold py-2">
           Your logged hours
         </h2>
@@ -75,7 +96,7 @@ export default function page() {
               onSelectMonth={handleMonthSelect}
             />
           ) : (
-            <p>Loading profile...</p>
+            <p>Log in to see your data</p>
           )}
         </div>
 
@@ -83,11 +104,11 @@ export default function page() {
           {totalHours ? (
             <TotalHours totalHours={totalHours} month={month} />
           ) : (
-            <div>no data</div>
+            <div>no data yet :/</div>
           )}
         </div>
 
-        <div>
+        <div className="flex flex-col items-center justify-center">
           {filteredHours.length > 0 ? (
             <LoggedHours
               loggedTime={filteredHours}
@@ -103,7 +124,10 @@ export default function page() {
           )}
         </div>
         <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
-          <ViewHour hour={selectedHour} />
+          <ViewHour
+            hour={selectedHour}
+            handleDeleteEntry={() => handleDeleteEntry(selectedHour.id)}
+          />
         </Modal>
       </div>
     </motion.div>

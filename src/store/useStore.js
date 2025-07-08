@@ -13,6 +13,11 @@ export const useStore = create((set) => ({
 
     set((state) => ({ loggedHours: [...state.loggedHours, hour] }));
   },
+  deleteHour: (id) => {
+    set((state) => ({
+      loggedHours: state.loggedHours.filter((hour) => hour.id !== id),
+    }));
+  },
   totalHours: null,
   setTotalHours: (total) => set({ totalHours: total }),
 }));
