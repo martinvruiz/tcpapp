@@ -24,19 +24,15 @@ export default function LoggedHours({ loggedTime, onView }) {
             transition={{ duration: 0.3 }}
             key={index}
             onClick={() => onView?.(time)}
-            className="bg-white border border-gray-200 hover:shadow-md transition-all duration-300 rounded-lg p-4 flex flex-row items-center justify-center md:justify-between text-center gap-2 w-full text-sm sm:text-base min-w-xs sm:min-w-lg"
+            className="bg-white border border-sky-600 hover:border-sky-900 hover:bg-gray-200 transition-all duration-300 rounded-lg p-2 md:px-4 flex flex-row items-center justify-center md:justify-between text-center gap-2 w-full text-sm sm:text-base min-w-2xs md:min-w-lg"
           >
-            <h4 className="font-semibold text-gray-800 w-2/5 md:text-start">
+            <h4 className="font-semibold text-gray-900 w-2/5 md:text-start">
               {time.notes || "N/A"}
             </h4>
 
             <div className="flex gap-3 w-4/5 justify-end">
               <span className="px-4 py-1 rounded-lg text-xs font-medium bg-sky-100 text-sky-600">
-                Hour: {pad(hours)}
-              </span>
-
-              <span className="px-4 py-1 rounded-lg text-xs font-medium bg-sky-100 text-sky-600">
-                Min: {pad(minutes)}
+                {pad(hours)} h : {pad(minutes)} m
               </span>
             </div>
           </motion.div>

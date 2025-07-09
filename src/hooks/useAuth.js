@@ -11,6 +11,7 @@ export function useAuth() {
   const [error, setError] = useState(null);
   const setProfile = useStore((state) => state.setProfile);
   const setLoggedHours = useStore((state) => state.setLoggedHours);
+  const setTotalHours = useStore((state) => state.setTotalHours);
 
   const signUp = async (email, password, name) => {
     setLoading(true);
@@ -61,6 +62,8 @@ export function useAuth() {
   const logOut = async () => {
     await supabase.auth.signOut();
     setProfile(null);
+    setLoggedHours([]);
+    setTotalHours(null);
   };
 
   const initializeProfile = async () => {

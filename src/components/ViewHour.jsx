@@ -21,7 +21,7 @@ export default function ViewHour({ hour, handleDeleteEntry }) {
   const formatTotalHours = (totalHours) => {
     const hours = Math.floor(totalHours);
     const minutes = Math.round((totalHours - hours) * 60);
-    return `${hours}h ${minutes}m`;
+    return `${hours} h ${minutes} m`;
   };
 
   return (

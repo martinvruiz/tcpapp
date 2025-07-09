@@ -25,8 +25,8 @@ export default function Login() {
     setLoggedHours(hours);
   };
   return (
-    <div className="h-full flex flex-col items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md bg-sky-900 rounded-xl shadow-md p-8">
+    <div className="h-full flex flex-col items-center justify-center px-4 py-8">
+      <div className="w-full max-w-md bg-sky-700 rounded-xl shadow-md p-8">
         <h2 className="text-3xl font-extrabold text-center text-white mb-6">
           Log in
         </h2>
@@ -51,12 +51,12 @@ export default function Login() {
           <div className="flex flex-col justify-center gap-4 pt-4">
             <button
               onClick={() => handleLogIn()}
-              className="px-4 py-2 bg-sky-500 text-white rounded hover:bg-sky-600 transition duration-200 cursor-pointer min-w-3xs"
+              className="px-4 py-2 bg-sky-900 text-white rounded hover:bg-sky-600 transition duration-200 cursor-pointer min-w-3xs shadow-lg"
             >
               Log in
             </button>
             <Link href="/profile/signup" className="w-full md:w-auto">
-              <button className="px-4 py-2 bg-sky-500 text-white rounded hover:bg-sky-600 transition duration-200 cursor-pointer min-w-3xs">
+              <button className="px-4 py-2 bg-sky-900 text-white rounded hover:bg-sky-600 transition duration-200 cursor-pointer min-w-3xs shadow-lg">
                 Sign up
               </button>
             </Link>

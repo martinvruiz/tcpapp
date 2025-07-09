@@ -6,12 +6,14 @@ import "react-toastify/dist/ReactToastify.css";
 export default function ToastProvider() {
   return (
     <ToastContainer
-      position="top-center"
+      position="bottom-center"
       autoClose={2000}
       className="toast-container"
       toastClassName="custom-toast"
       bodyClassName="custom-toast-body"
       progressClassName="custom-progress"
+      pauseOnHover={false}
+      limit={1}
     />
   );
 }

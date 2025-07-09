@@ -82,7 +82,7 @@ export default function Navbar({ children }) {
 
       {open && (
         <div
-          className="fixed inset-0 bg-black/40 z-40 md:hidden"
+          className="fixed inset-0 top-0 bg-black/40 z-40 md:hidden"
           onClick={() => setOpen(false)}
         />
       )}
@@ -106,7 +106,7 @@ export default function Navbar({ children }) {
           </button>
         </header>
 
-        <main className="w-full h-full flex-1 flex flex-col items-center md:justify-center pt-16 md:pt-0 bg-sky-100">
+        <main className="w-full h-full flex-1 flex flex-col items-center justify-center pt-0 bg-sky-700">
           {children}
         </main>
       </div>

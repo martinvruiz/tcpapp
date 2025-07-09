@@ -28,12 +28,22 @@ export default function page() {
 
   const calculateDuration = async () => {
     if (!user) {
-      toast.warn("You must be logged in to register your work hours.");
+      toast.warn("You must be logged in to register your work hours.", {
+        closeOnClick: true,
+        closeButton: false,
+        hideProgressBar: true,
+        className: "!bg-sky-600 !shadow-xl !text-white !mb-6",
+      });
       return;
     }
 
     if (!entryDate || !entryTime || !exitDate || !exitTime) {
-      toast.warn("Please complete all fields before saving.");
+      toast.warn("Please complete all fields before saving.", {
+        closeOnClick: true,
+        closeButton: false,
+        hideProgressBar: true,
+        className: "!bg-sky-600 !shadow-xl !text-white !mb-6",
+      });
       return;
     }
 
@@ -41,17 +51,32 @@ export default function page() {
     const end = new Date(`${exitDate}T${exitTime}`);
 
     if (isNaN(start) || isNaN(end)) {
-      toast.warn("Invalid date or time format.");
+      toast.warn("Invalid date or time format.", {
+        closeOnClick: true,
+        closeButton: false,
+        hideProgressBar: true,
+        className: "!bg-sky-600 !shadow-xl !text-white !mb-4",
+      });
       return;
     }
 
     if (start.getTime() === end.getTime()) {
-      toast.warn("Entry and exit times cannot be the same.");
+      toast.warn("Entry and exit times cannot be the same.", {
+        closeOnClick: true,
+        closeButton: false,
+        hideProgressBar: true,
+        className: "!bg-sky-600 !shadow-xl !text-white !mb-4",
+      });
       return;
     }
 
     if (end <= start) {
-      toast.warn("Exit must be after entry.");
+      toast.warn("Exit must be after entry.", {
+        closeOnClick: true,
+        closeButton: false,
+        hideProgressBar: true,
+        className: "!bg-sky-600 !shadow-xl !text-white !mb-4",
+      });
       return;
     }
     const diff = end - start;
@@ -81,7 +106,12 @@ export default function page() {
       addHour(result[0]);
     }
 
-    toast.success("Saved");
+    toast.success("Saved", {
+      closeOnClick: true,
+      closeButton: false,
+      hideProgressBar: true,
+      className: "!bg-sky-600 !shadow-xl !text-white !mb-4",
+    });
   };
 
   return (
@@ -107,13 +137,13 @@ export default function page() {
       />
       <div className="p-4 bg-gray-50 rounded-lg flex flex-col items-center gap-2">
         <button
-          className="bg-sky-900 hover:bg-sky-600 p-3 px-8 rounded-md text-white"
+          className="bg-sky-900 hover:bg-sky-600 p-3 px-8 rounded-md text-white shadow-lg"
           onClick={() => calculateDuration()}
         >
           Save time
         </button>
         <p className="font-medium text-center">
-          Total time logged: <span className="text-blue-600">{duration}</span>
+          Total time logged: <span className="text-sky-600">{duration}</span>
         </p>
         {duration && !duration.includes("h") && (
           <p className="text-red-500 text-sm text-center mt-1">{duration}</p>

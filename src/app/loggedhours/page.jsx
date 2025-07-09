@@ -91,21 +91,19 @@ export default function page() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
       layout
-      className="max-w-md min-h-[60dvh] mx-auto p-6 my-6 bg-white rounded-lg shadow-md text-black md:min-w-4xl sm:min-w-xl"
+      className="max-w-md min-h-[60dvh] mx-auto p-6 my-6 bg-white flex flex-col justify-center rounded-lg shadow-md text-black md:min-w-4xl min-w-xs"
     >
       <div className="flex flex-col items-center justify-center">
-        <h2 className="text-xl md:text-3xl font-bold py-2">
-          Your logged hours
-        </h2>
+        <h2 className="text-3xl font-bold mb-6">Logged hours</h2>
 
         <div className="mb-4">
-          {profile?.id ? (
+          {profile ? (
             <MonthSelector
               userId={profile.id}
               onSelectMonth={handleMonthSelect}
             />
           ) : (
-            <p>Log in to see your data</p>
+            <p>{""}</p>
           )}
         </div>
 
@@ -113,7 +111,7 @@ export default function page() {
           {totalHours ? (
             <TotalHours totalHours={totalHours} month={month} />
           ) : (
-            <div>no data yet :/</div>
+            <div>{""}</div>
           )}
         </div>
 

@@ -32,7 +32,7 @@ export const confirmToast = ({
       closeButton: false,
       closeOnClick: false,
       draggable: false,
-      className: "!bg-sky-700 !text-gray-800 !shadow-md !rounded-lg !p-4",
+      className: "!bg-sky-700 !text-gray-900 !shadow-md !rounded-lg !p-4 !mb-4",
     }
   );
 };
